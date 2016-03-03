@@ -1,6 +1,5 @@
 {
   "name": "autorelease-github",
-  "version": "1.0.0-alpha.1",
   "description": "Autorelease steps for Github.",
   "author": "Tyler Johnson <tyler@tylerjohnson.me>",
   "repository": {
@@ -9,11 +8,10 @@
   },
   "scripts": {
     "lint": "eslint src/ test/",
-    "build": "make",
-    "prepublish": "npm run lint && npm run build"
+    "build": "make clean && make",
+    "semantic-release": "semantic-release pre && npm publish && semantic-release post"
   },
   "dependencies": {
-    "@bahmutov/parse-github-repo-url": "^0.1.0",
     "es6-promisify": "^3.0.0",
     "git-head": "^1.9.0",
     "github": "^0.2.4",
@@ -29,8 +27,12 @@
     "eslint": "^2.2.0",
     "rollup": "^0.25.4",
     "rollup-plugin-babel": "^2.4.0",
-    "tape": "^4.5.0"
+    "tape": "^4.5.0",
+    "semantic-release": "^4.3.5"
   },
-  "keywords": [],
+  "keywords": [
+    "autorelease",
+    "github"
+  ],
   "license": "MIT"
 }
