@@ -1,5 +1,5 @@
 import _gitHead from "git-head";
-import GitHubi from "github";
+import GitHub from "github";
 import promisify from "es6-promisify";
 import {resolve} from "path";
 import parseGithubUrl from "parse-github-url";
@@ -16,7 +16,7 @@ export default async function(log, {
 	draftMode
 }) {
 	let ghConfig = githubUrl ? url.parse(githubUrl) : {};
-	let github = new GitHubi({
+	let github = new GitHub({
 		version: "3.0.0",
 		port: ghConfig.port,
 		protocol: (ghConfig.protocol || "").split(":")[0] || null,
