@@ -17,15 +17,15 @@ export default async function(log, {
 }) {
 	let ghConfig = githubUrl ? url.parse(githubUrl) : {};
 	let github = new GitHubi({
-		version: '3.0.0',
+		version: "3.0.0",
 		port: ghConfig.port,
-		protocol: (ghConfig.protocol || '').split(':')[0] || null,
+		protocol: (ghConfig.protocol || "").split(":")[0] || null,
 		host: ghConfig.hostname,
 		pathPrefix: githubApiPathPrefix || null
 	});
 
 	github.authenticate({
-		type: 'oauth',
+		type: "oauth",
 		token: githubToken
 	});
 
@@ -35,14 +35,14 @@ export default async function(log, {
 	await new Promise((resolve, reject) => {
 		github.releases.createRelease({
 			owner: ghRepo.owner,
-			repo: ghRepo.repo,
-			name: 'v' + pkg.version,
-			tag_name: 'v' + pkg.version,
+			repo: ghRepo.name,
+			name: "v" + pkg.version,
+			tag_name: "v" + pkg.version,
 			target_commitish: head,
 			draft: Boolean(draftMode),
 			body: log
-		}, (err) => {
-			err ? reject(err) : resolve();
+		}, (err, res) => {
+			err ? reject(err) : resolve(res);
 		});
 	});
 }
