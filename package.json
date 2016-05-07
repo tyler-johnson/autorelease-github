@@ -9,6 +9,7 @@
   "scripts": {
     "lint": "eslint src/ test/",
     "build": "make clean && make",
+    "prepublish": "npm run build",
     "autorelease": "autorelease pre && npm publish && autorelease post"
   },
   "dependencies": {
