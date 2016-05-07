@@ -1,9 +1,10 @@
 import _gitHead from "git-head";
-import GitHubi from "github";
+import GitHub from "github";
 import promisify from "es6-promisify";
 import {resolve} from "path";
 import parseGithubUrl from "parse-github-url";
 import url from "url";
+import SemVer from "semver";
 
 const gitHead = promisify(_gitHead);
 
@@ -16,7 +17,7 @@ export default async function(log, {
 	draftMode
 }) {
 	let ghConfig = githubUrl ? url.parse(githubUrl) : {};
-	let github = new GitHubi({
+	let github = new GitHub({
 		version: "3.0.0",
 		port: ghConfig.port,
 		protocol: (ghConfig.protocol || "").split(":")[0] || null,
@@ -31,16 +32,19 @@ export default async function(log, {
 
 	let head = await gitHead(resolve(basedir, ".git"));
 	let ghRepo = parseGithubUrl(pkg.repository.url);
+	let version = new SemVer(pkg.version);
+	let name = "v" + version.toString();
 
 	await new Promise((resolve, reject) => {
 		github.releases.createRelease({
 			owner: ghRepo.owner,
 			repo: ghRepo.name,
-			name: "v" + pkg.version,
-			tag_name: "v" + pkg.version,
+			name: name,
+			tag_name: name,
 			target_commitish: head,
 			draft: Boolean(draftMode),
-			body: log
+			body: log,
+			prerelease: Boolean(version.prerelease.length)
 		}, (err, res) => {
 			err ? reject(err) : resolve(res);
 		});
