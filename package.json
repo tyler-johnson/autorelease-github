@@ -13,7 +13,7 @@
     "autorelease": "autorelease pre && npm publish && autorelease post"
   },
   "dependencies": {
-    "es6-promisify": "^3.0.0",
+    "es6-promisify": "^4.0.0",
     "git-head": "^1.9.0",
     "github": "^0.2.4",
     "parse-github-url": "^0.3.0",
